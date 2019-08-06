@@ -405,15 +405,15 @@ double _filtKUWAHARA(double *vals, long nvals ) {
     
     jj = 0;
     retval = sig[0];
-    if (( sig[1] < retval ) ) {
+    if (( sig[1] < retval ) && (fabs(sig[1]-retval)>2*DBL_EPSILON*retval) ) {
       jj = 1; 
       retval=sig[1]; 
     }
-    if (( sig[2] < retval ) ) {
+    if (( sig[2] < retval ) && (fabs(sig[2]-retval)>2*DBL_EPSILON*retval) ) {
       jj = 2; 
       retval=sig[2]; 
     }
-    if (( sig[3] < retval ) ) {
+    if (( sig[3] < retval ) && (fabs(sig[3]-retval)>2*DBL_EPSILON*retval) ) {
       jj = 3; 
       retval=sig[3]; 
     }
@@ -1053,3 +1053,91 @@ double _filtMIN_SLOPE(double *vals, long nvals) {
   return(retval);
 
 }
+
+
+
+
+/* ------------------ */
+
+
+void *get_method( char *func ) 
+{
+
+  void *retfun = NULL;
+  
+  if ( !strcmp( func, "min" ) ) {
+    retfun = (void*) _filtMIN;
+  } else if ( !strcmp( func, "max" ) ) {
+    retfun = (void*) _filtMAX;
+  } else if ( !strcmp( func, "mean" ) ) {
+    retfun = (void*) _filtMEAN;
+  } else if ( !strcmp( func, "sum" ) ) {
+    retfun = (void*) _filtSUM;
+  } else if ( !strcmp( func, "median" ) ) {
+    retfun = (void*) _filtMEDIAN;
+  } else if ( !strcmp( func, "mode" ) ) {
+    retfun = (void*) _filtMODE;
+  } else if ( !strcmp( func, "count" ) ) {
+    retfun = (void*) _filtCOUNT;
+  } else if ( !strcmp( func, "sigma" ) ) {
+    retfun = (void*) _filtSIG;
+  } else if ( !strcmp( func, "extreme" ) ) {
+    retfun = (void*) _filtEXTREME;
+  } else if ( !strcmp( func, "locheq" ) ) {
+    retfun = (void*) _filtLOCEQ;
+  } else if ( !strcmp( func, "kuwahara" ) ) {
+    retfun = (void*) _filtKUWAHARA; 
+  } else if ( !strcmp( func, "unsharp" ) ) {
+    retfun = (void*) _filtUNSHARP;
+  } else if ( !strcmp( func, "range" ) ) {
+    retfun = (void*) _filtRANGE;
+  } else if ( !strcmp( func, "variance" ) ) {
+    retfun = (void*) _filtVARIANCE;
+  } else if ( !strcmp( func, "nmode" ) ) {
+    retfun = (void*) _filtNORM_MODE;
+  } else if ( !strcmp( func, "q25" ) ) {
+    retfun = (void*) _filtQUANTILE_25;
+  } else if ( !strcmp( func, "q33" ) ) {
+    retfun = (void*) _filtQUANTILE_33;
+  } else if ( !strcmp( func, "q67" ) ) {
+    retfun = (void*) _filtQUANTILE_67;
+  } else if ( !strcmp( func, "q75" ) ) {
+    retfun = (void*) _filtQUANTILE_75;
+  } else if ( !strcmp( func, "qxx" ) ) {
+    retfun = (void*) _filtQUANTILE_XX;
+  } else if ( !strcmp( func, "mcv" ) ) {
+    retfun = (void*) _filtMOST_COMMON; 
+  } else if ( !strcmp( func, "rclip" ) ) {
+    retfun = (void*) _filtRCLIP;
+  } else if ( !strcmp( func, "peak" ) ) {
+    retfun = (void*) _filtPEAK;
+  } else if ( !strcmp( func, "ridge" ) ) {
+    retfun = (void*) _filtRIDGE;
+  } else if ( !strcmp( func, "valley" ) ) {
+    retfun = (void*) _filtVALLEY;
+  } else if ( !strcmp( func, "plain" ) ) {
+    retfun = (void*) _filtPLAIN;
+  } else if ( !strcmp( func, "olympic" ) ) {
+    retfun = (void*) _filtOLYMPIC;
+  } else if ( !strcmp( func, "pmean" ) ) {
+    retfun = (void*) _filtPMEAN;
+  } else if ( !strcmp( func, "mid" ) ) {
+    retfun = (void*) _filtMID;
+  } else if ( !strcmp( func, "mu3" ) ) {
+    retfun = (void*) _filtMU3;
+  } else if ( !strcmp( func, "mu4" ) ) {
+    retfun = (void*) _filtMU4;
+  } else if ( !strcmp( func, "jitter" ) ) {
+    retfun = (void*) _filtJITTER;
+  } else if ( !strcmp( func, "rms" ) ) {
+    retfun = (void*) _filtRMS;
+  } else if ( !strcmp( func, "nslope" ) ) {
+    retfun = (void*) _filtMIN_SLOPE;
+  } else {
+    retfun = NULL;
+  }
+
+  return(retfun);
+
+}
+

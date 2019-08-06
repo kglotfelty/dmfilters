@@ -18,6 +18,8 @@
 /*  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.             */
 /*                                                                          */
 
+extern void* get_method( char *func_name);
+
 extern double _filtCOUNT(double *vals, long nvals ); 
 extern double _filtMIN(double *vals, long nvals ); 
 extern double _filtMAX(double *vals, long nvals );
