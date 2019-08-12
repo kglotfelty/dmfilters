@@ -3,6 +3,7 @@ AM_INIT_AUTOMAKE([foreign -Wall])
 AC_PROG_CC
 AC_PROG_RANLIB
 AM_PROG_CC_C_O
+AM_PROG_AR
 
 # -- Hack to provide missing pkg-config files
 
@@ -32,10 +33,6 @@ export PKG_CONFIG_PATH=$prefix/lib/pkgconfig:$prefix/ots/lib/pkgconfig:$PKG_CONF
 PKG_CONFIG_PATH=./pkgconfig:${PKG_CONFIG_PATH}
 
 PKG_CHECK_MODULES( [CIAO], [
-  ascdm
-  cxcparam
-  region
-  err
   ds
 ])
 
@@ -43,6 +40,7 @@ PKG_CHECK_MODULES( [CIAO], [
 AC_CONFIG_FILES([
   Makefile
   src/Makefile
+  src/dmfilters.pc
 ])
 
 

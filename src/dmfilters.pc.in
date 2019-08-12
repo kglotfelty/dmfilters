@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: dmfilters
+Description: Various simple statistics used as filters
+Version: 4.11
+Requires: ds
+Libs: -L${libdir} -ldmfilters 
+Cflags: -I${includedir}
