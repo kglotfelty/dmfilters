@@ -24,7 +24,6 @@
 #include <math.h>
 #include <float.h>
 #include <string.h>  /* for memset */
-#include <time.h>
 
 #ifndef MIN
 #define MIN(a,b) (((a)<=(b))?(a):(b))
@@ -494,6 +493,23 @@ double _filtQUANTILE_XX(double *vals, long nvals ) {
 }
 
 
+double _filtQUANTILE_10(double *vals, long nvals ) {
+  double retval;
+  long idx;
+  if ( 0 == nvals ) {
+    ds_MAKE_DNAN(retval);
+    return(retval);
+  }
+  
+  retval = nvals * 0.1 ;
+  idx = retval; /* integer case */
+  
+  if ( 1 == nvals ) 
+    retval = vals[0];
+  else
+    retval = kth_smallest( vals, nvals, idx );
+  return(retval); 
+}
 
 double _filtQUANTILE_25(double *vals, long nvals ) {
   double retval;
@@ -567,6 +583,25 @@ double _filtQUANTILE_75(double *vals, long nvals ) {
 
   return(retval);
 }
+
+double _filtQUANTILE_90(double *vals, long nvals ) {
+  double retval;
+  long idx;
+  if ( 0 == nvals ) {
+    ds_MAKE_DNAN(retval);
+    return(retval);
+  }
+  
+  retval = nvals *0.9 ;
+  idx = retval; /* integer case */
+  
+  if ( 1 == nvals ) 
+    retval = vals[0];
+  else
+    retval = kth_smallest( vals, nvals, idx );
+  return(retval); 
+}
+
 
 double _filtMOST_COMMON(double *vals, long nvals ) {
   double retval;
@@ -851,17 +886,17 @@ double _filtJITTER(double *vals, long nvals ) {
   double retval;
   long idx;
 
-  static int settime=0;
+  //~ static int settime=0;
 
   if ( 0 == nvals ) {
     ds_MAKE_DNAN(retval);
     return(retval);
   }
 
-  if (0 == settime) {
-    srand48( time( NULL ));
-    settime=1;
-  }
+  //~ if (0 == settime) {
+    //~ srand48( time( NULL ));
+    //~ settime=1;
+  //~ }
 
   retval = drand48() * nvals;
 
@@ -1095,6 +1130,8 @@ void *get_method( char *func )
     retfun = (void*) _filtVARIANCE;
   } else if ( !strcmp( func, "nmode" ) ) {
     retfun = (void*) _filtNORM_MODE;
+  } else if ( !strcmp( func, "q10" ) ) {
+    retfun = (void*) _filtQUANTILE_10;
   } else if ( !strcmp( func, "q25" ) ) {
     retfun = (void*) _filtQUANTILE_25;
   } else if ( !strcmp( func, "q33" ) ) {
@@ -1103,6 +1140,8 @@ void *get_method( char *func )
     retfun = (void*) _filtQUANTILE_67;
   } else if ( !strcmp( func, "q75" ) ) {
     retfun = (void*) _filtQUANTILE_75;
+  } else if ( !strcmp( func, "q90" ) ) {
+    retfun = (void*) _filtQUANTILE_90;
   } else if ( !strcmp( func, "qxx" ) ) {
     retfun = (void*) _filtQUANTILE_XX;
   } else if ( !strcmp( func, "mcv" ) ) {
