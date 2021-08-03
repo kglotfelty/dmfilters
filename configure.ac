@@ -1,5 +1,6 @@
 AC_INIT([dmfilters], [4.13.0], [glotfeltyk@si.edu])
 AM_INIT_AUTOMAKE([foreign -Wall])
+AM_MAINTAINER_MODE([disable])
 AC_PROG_CC
 AC_PROG_RANLIB
 AM_PROG_CC_C_O
